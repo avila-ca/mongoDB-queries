@@ -1,20 +1,28 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import fs from "node:fs/promises";
+import fs from "fs/promises";
+import { connectionDB, insertData } from "./connectionDB";
+import { queries } from "./queries";
 
 dotenv.config();
 
-const restaurantFile = fs.readFile("restaurants/restaurants.json", 'utf-8');
+export async function main() {
+  try {
+      const nameDB = process.env.DATABASE ?? "error";
+      const urlDB = process.env.MONGO_URI ?? "error";
 
-const restauranteSchema = new mongoose.Schema(restaurantFile);
-const nameDB = process.env.DATABASE ?? "error";
-const urlDB = process.env.MONGO_URI ?? "error";
-const dbConnection = mongoose
-	.connect(urlDB)
-	.then(() => console.log(`${nameDB} database connected!`));
+      await connectionDB(urlDB);
+      console.log(`${nameDB} database connected!`);
 
-const restaurantes = mongoose.model("Restaurant", restauranteSchema);
+      const restaurantData = await fs.readFile("./restaurants/restaurants.json", "utf-8");
+      const data = JSON.parse(restaurantData);
+    console.log('File readed!');
 
-const rests = restaurantes.find();
+    const collectionName = "restaurantes"; 
+    insertData(collectionName, data);
+} catch (err) {
+  console.error("Error: connection DB | FS reading:", err);
+} 
+}
 
-console.log(rests);
+main();
