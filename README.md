@@ -19,7 +19,7 @@ MONGO_URI=mongodb+srv://<user>:<password>@todo.pm4fsjf.mongodb.net/Restaurante?r
 
 ### 🏁 How To Start
 
-Now you can create the collections and to do some querys.
+Now you can create the collections and to do all the queries querys.
 
 ```bash
 node src/main.ts
