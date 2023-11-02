@@ -32,9 +32,11 @@ export const queries = async (collectionName:string) =>{
         //const query26 = await Restaurant.find({}, {name:1, _id:0}).sort({"name":-1});
         //const query27 = await Restaurant.find({name:1, _id:0}).sort({cuisine:-1, borough: 1});
         //const query28 = await Restaurant.find({"address.street":{$esists:true}});
-        const query29 = await Restaurant.find({},{})
-
-        console.log(query29);
+        //const query29 = await Restaurant.find( { "coord" : { $type : "double" } } );
+        //const query30 = await Restaurant.find({ "grades.score":{$mod: [7, 0] }},{restaurant_id:1, grades:1, name:1});
+        //const query31 = await Restaurant.find({name:/mon/}, {restaurant_id:1, grades:1, name:1, borough:1, cuisine:1, coord:1});
+        const query32 = await Restaurant.find({name:/^Mad/i},{restaurant_id:1, grades:1, name:1, borough:1, cuisine:1, coord:1});
+        console.log(query32);
     }
     catch(err){
         console.log("Error query consulting: ", err);
